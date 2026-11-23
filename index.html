@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7c775" />
+    <title>Kevin's Cookie Shop Tycoon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Kevin's Cookie Shop Tycoon home">
+          <span class="brand-mark">K</span>
+          <span><strong>Kevin's</strong><small>COOKIE SHOP</small></span>
+        </a>
+        <div class="day-pill"><span>DAY</span><strong id="dayNumber">1</strong><span>OF 30</span></div>
+        <div class="cash-display"><span>Available cash</span><strong id="cashTop">$100.00</strong></div>
+      </header>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow" id="marketLabel">MONDAY MORNING</p>
+          <h1>Ready to make today<br />a little sweeter?</h1>
+          <p class="hero-copy" id="marketMessage">Set up the counter, choose your price, and welcome the neighborhood.</p>
+        </div>
+        <div class="cookie-art" aria-hidden="true">
+          <span class="chip chip-1"></span><span class="chip chip-2"></span><span class="chip chip-3"></span><span class="chip chip-4"></span><span class="chip chip-5"></span>
+        </div>
+      </section>
+
+      <section class="game-grid">
+        <form id="decisionForm" class="card decisions" autocomplete="off">
+          <div class="card-heading"><div><p class="eyebrow">MORNING PLAN</p><h2>Set today’s shop plan</h2></div><span class="oven-icon">♨</span></div>
+
+          <label class="field-label" for="cookies">Cookies to bake <span class="field-value"><b id="cookieValue">24</b> cookies</span></label>
+          <input id="cookies" type="range" min="0" max="120" value="24" step="1" />
+          <div class="range-ends"><span>0</span><span>120</span></div>
+          <p class="hint">Ingredients cost <strong>$0.45</strong> per cookie. Unsold cookies are donated at closing.</p>
+
+          <div class="two-fields">
+            <div>
+              <label class="field-label" for="price">Price per cookie</label>
+              <div class="number-input"><span>$</span><input id="price" type="number" min="0.5" max="10" value="2.50" step="0.10" inputmode="decimal" /></div>
+            </div>
+            <div>
+              <label class="field-label" for="advertising">Advertising</label>
+              <div class="number-input"><span>$</span><input id="advertising" type="number" min="0" max="100" value="5" step="1" inputmode="decimal" /></div>
+            </div>
+          </div>
+          <p class="hint">Ads help more cookie fans discover your shop.</p>
+
+          <div class="cost-preview"><span>Estimated upfront cost</span><strong id="upfrontCost">$15.80</strong></div>
+          <button id="openButton" type="submit">Open the shop <span>→</span></button>
+          <p id="formError" class="form-error" role="alert"></p>
+        </form>
+
+        <aside class="right-column">
+          <section class="card snapshot">
+            <p class="eyebrow">SHOP SNAPSHOT</p>
+            <div class="snapshot-row"><span>Cash on hand</span><strong id="cashSnapshot">$100.00</strong></div>
+            <div class="snapshot-row"><span>Cookies sold</span><strong id="totalSold">0</strong></div>
+            <div class="snapshot-row"><span>Best selling day</span><strong id="bestDay">—</strong></div>
+            <div class="progress-label"><span>Month progress</span><span id="progressText">1 / 30</span></div>
+            <div class="progress"><i id="progressBar"></i></div>
+          </section>
+          <section class="card market-card">
+            <span class="sun">☀</span>
+            <div><p class="eyebrow">TODAY'S FORECAST</p><h3 id="forecastTitle">A lovely day for a treat</h3><p id="forecastBody">A steady neighborhood crowd is expected. Price wisely!</p></div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="ledger-section">
+        <div class="section-heading"><div><p class="eyebrow">DAILY LEDGER</p><h2>Your month at a glance</h2></div><span id="ledgerCaption">No days completed yet</span></div>
+        <div class="ledger-card">
+          <table>
+            <thead><tr><th>Day</th><th>Cookies sold</th><th>Revenue</th><th>Expenses</th><th>Profit</th><th>Cash</th></tr></thead>
+            <tbody id="ledgerBody"><tr class="empty-row"><td colspan="6">Your first day’s results will appear here.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <div id="resultModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <section class="result-modal">
+        <button id="closeModal" class="close" aria-label="Close results">×</button>
+        <p class="eyebrow">DAY <span id="resultDay">1</span> IS COMPLETE</p>
+        <h2 id="modalTitle">The ovens did their thing!</h2>
+        <p id="resultBlurb" class="result-blurb"></p>
+        <div class="result-stats"><div><span>Sold</span><strong id="resultSold">0</strong><small>of <span id="resultBaked">0</span> cookies</small></div><div><span>Revenue</span><strong id="resultRevenue">$0.00</strong></div><div><span>Expenses</span><strong id="resultExpenses">$0.00</strong></div></div>
+        <div class="profit-band"><span>Today’s profit</span><strong id="resultProfit">+$0.00</strong><span>Cash: <b id="resultCash">$100.00</b></span></div>
+        <button id="nextDay" class="next-button">Plan the next day <span>→</span></button>
+      </section>
+    </div>
+
+    <div id="finalModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="finalTitle">
+      <section class="result-modal final-modal">
+        <span class="trophy">★</span><p class="eyebrow">MONTH COMPLETE</p><h2 id="finalTitle">Kevin’s Cookie Shop is a hit!</h2>
+        <p class="result-blurb">Thirty days of cookies, courage, and careful pricing. Here’s how your first month turned out.</p>
+        <div class="final-cash"><span>Final cash</span><strong id="finalCash">$0.00</strong><small id="finalChange"></small></div>
+        <div class="final-details"><span><b id="finalSold">0</b> cookies sold</span><span><b id="finalProfit">$0.00</b> total profit</span></div>
+        <button id="playAgain" class="next-button">Start a new month <span>↻</span></button>
+      </section>
+    </div>
+    <script src="game.js"></script>
+  </body>
+</html>
